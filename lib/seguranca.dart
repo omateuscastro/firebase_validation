@@ -10,13 +10,14 @@ import 'dart:io';
 
 class Seguranca {
   String _retorno;
-  final String codigoAcesso;
+  String codigoAcesso;
   final String email;
   final String password;
 
   Seguranca({this.codigoAcesso, this.email, this.password});
 
   Future<String> execute() async {
+    this.codigoAcesso = await redPreferences("edtCodigo");
     if (codigoAcesso.trim().length == 0) {
       _retorno = "Informe o Código de Acesso para realizar está operação !";
     } else {
