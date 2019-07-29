@@ -17,7 +17,7 @@ class Seguranca {
   Seguranca({this.codigoAcesso, this.email, this.password});
 
   Future<String> execute() async {
-    this.codigoAcesso = await redPreferences("edtCodigo");
+    this.codigoAcesso = await readPreferences("edtCodigo");
     if (codigoAcesso.trim().length == 0) {
       _retorno = "Informe o Código de Acesso para realizar está operação !";
     } else {
@@ -28,12 +28,12 @@ class Seguranca {
   }
 
   Future<Null> podeVerificar() async {
-    String sDias = await redPreferences("dias_autenticacao");
+    String sDias = await readPreferences("dias_autenticacao");
 
     if (sDias.trim().length == 0 || sDias.contains("0"))
       await verificaAutenticacao();
     else {
-      String sData = await redPreferences("dt_ult_autenticacao");
+      String sData = await readPreferences("dt_ult_autenticacao");
 
       if (sData.trim().length == 0) {
         await verificaAutenticacao();
@@ -47,7 +47,7 @@ class Seguranca {
         } else {
           PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-          String sVersao = await redPreferences("versao");
+          String sVersao = await readPreferences("versao");
 
           if (equalsIgnoreCase(sVersao, packageInfo.version)) {
             return;
@@ -139,9 +139,9 @@ class Seguranca {
     await savePreferences("dt_ult_autenticacao", getData(getDate())[4]);
     await savePreferences("versao", packageInfo.version);
 
-    String sUsuario = await redPreferences("edtUsuario");
-    String sSenha = await redPreferences("edtSenha");
-    String sServico = await redPreferences("edtServico");
+    String sUsuario = await readPreferences("edtUsuario");
+    String sSenha = await readPreferences("edtSenha");
+    String sServico = await readPreferences("edtServico");
 
     if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
@@ -199,12 +199,32 @@ class Seguranca {
     }
   }
 
+  Future getCodigo() async {
+    var cod =  await readPreferences('edtCodigo');
+    return cod;
+  }
+
+  Future getSenha() async {
+    var senha =  await readPreferences('edtSenha');
+    return senha;
+  }
+
+  Future getURL() async {
+    var url =  await readPreferences('edtServico');
+    return url;
+  }
+
+  Future getUsuario() async {
+    var usuario =  await readPreferences('edtUsuario');
+    return usuario;
+  }
+
   Future<Null> savePreferences(String key, String value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString(key, value);
   }
 
-  Future<String> redPreferences(String key) async {
+  Future<String> readPreferences(String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String sRetorno = sharedPreferences.getString(key);

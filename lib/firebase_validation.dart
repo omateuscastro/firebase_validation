@@ -1,3 +1,4 @@
+import 'package:firebase_validation/politica.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'funcoes.dart';
@@ -93,8 +94,8 @@ class _ConfigPageState extends State<ConfigPage> {
                       style: TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
-                      // Navigator.of(context).push(
-                      //     MaterialPageRoute(builder: (context) => Politica()));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => PoliticaPage()));
                     }),
               )
             ],
