@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:liberacaoremota/politica.dart';
 
 class ConfigPage extends StatefulWidget {
+  final bool motorista;
+  ConfigPage({this.motorista});
   @override
   _ConfigPageState createState() => _ConfigPageState();
 }
@@ -14,11 +16,13 @@ class _ConfigPageState extends State<ConfigPage> {
   TextEditingController _edtUsuarioText = TextEditingController();
   TextEditingController _edtSenhaText = TextEditingController();
   TextEditingController _edtServicoText = TextEditingController();
+  TextEditingController _edtMotoristaText = TextEditingController();
 
   FocusNode _edtCodigoFocus = FocusNode();
   FocusNode _edtUsuarioFocus = FocusNode();
   FocusNode _edtSenhaFocus = FocusNode();
   FocusNode _edtServicoFocus = FocusNode();
+  FocusNode _edtMotoristaFocus = FocusNode();
 
   @override
   void initState() {
@@ -32,6 +36,9 @@ class _ConfigPageState extends State<ConfigPage> {
     this._edtCodigoText.text = await redPreferences("edtCodigo");
     this._edtSenhaText.text = await redPreferences("edtSenha");
     this._edtServicoText.text = await redPreferences("edtServico");
+    if (this.widget.motorista) {
+      this._edtMotoristaText.text = await redPreferences("edtMotorista");
+    }
   }
 
   @override
@@ -61,6 +68,16 @@ class _ConfigPageState extends State<ConfigPage> {
                     decoration: InputDecoration(labelText: "Código de Acesso"),
                     keyboardType: TextInputType.text),
               ),
+              this.widget.motorista
+                  ? Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: TextField(
+                          focusNode: _edtMotoristaFocus,
+                          controller: _edtMotoristaText,
+                          decoration: InputDecoration(labelText: "Código do Motorista"),
+                          keyboardType: TextInputType.number),
+                    )
+                  : Container(),
               Container(
                 margin: EdgeInsets.only(bottom: 10),
                 child: TextField(
@@ -94,8 +111,8 @@ class _ConfigPageState extends State<ConfigPage> {
                       style: TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => PoliticaPage()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PoliticaPage()));
                     }),
               )
             ],
@@ -126,6 +143,7 @@ class _ConfigPageState extends State<ConfigPage> {
     await savePreferences("edtUsuario", this._edtUsuarioText.text);
     await savePreferences("edtSenha", this._edtSenhaText.text);
     await savePreferences("edtServico", this._edtServicoText.text);
+    await savePreferences("edtMotorista", this._edtMotoristaText.text);
     Navigator.of(context).pop(true);
   }
 
