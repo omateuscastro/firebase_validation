@@ -6,7 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigPage extends StatefulWidget {
   final bool motorista;
-  ConfigPage({this.motorista});
+  final bool placa;
+  ConfigPage({this.motorista, this.placa});
   @override
   _ConfigPageState createState() => _ConfigPageState();
 }
@@ -17,12 +18,14 @@ class _ConfigPageState extends State<ConfigPage> {
   TextEditingController _edtSenhaText = TextEditingController();
   TextEditingController _edtServicoText = TextEditingController();
   TextEditingController _edtMotoristaText = TextEditingController();
+  TextEditingController _edtPlacaText = TextEditingController();
 
   FocusNode _edtCodigoFocus = FocusNode();
   FocusNode _edtUsuarioFocus = FocusNode();
   FocusNode _edtSenhaFocus = FocusNode();
   FocusNode _edtServicoFocus = FocusNode();
   FocusNode _edtMotoristaFocus = FocusNode();
+  FocusNode _edtPlacaFocus = FocusNode();
 
   @override
   void initState() {
@@ -38,6 +41,9 @@ class _ConfigPageState extends State<ConfigPage> {
     this._edtServicoText.text = await redPreferences("edtServico");
     if (this.widget.motorista) {
       this._edtMotoristaText.text = await redPreferences("edtMotorista");
+    }
+    if (this.widget.placa) {
+      this._edtPlacaText.text = await redPreferences("edtPlaca");
     }
   }
 
@@ -74,7 +80,8 @@ class _ConfigPageState extends State<ConfigPage> {
                       child: TextField(
                           focusNode: _edtMotoristaFocus,
                           controller: _edtMotoristaText,
-                          decoration: InputDecoration(labelText: "Código do Motorista"),
+                          decoration:
+                              InputDecoration(labelText: "Código do Motorista"),
                           keyboardType: TextInputType.number),
                     )
                   : Container(),
@@ -94,6 +101,17 @@ class _ConfigPageState extends State<ConfigPage> {
                       decoration: InputDecoration(labelText: "Senha"),
                       keyboardType: TextInputType.text,
                       obscureText: true)),
+              this.widget.placa
+                  ? Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: TextField(
+                          focusNode: _edtPlacaFocus,
+                          controller: _edtPlacaText,
+                          decoration:
+                              InputDecoration(labelText: "Placa do veículo"),
+                          keyboardType: TextInputType.number),
+                    )
+                  : Container(),
               Container(
                   margin: EdgeInsets.only(bottom: 10),
                   child: TextField(
@@ -144,6 +162,7 @@ class _ConfigPageState extends State<ConfigPage> {
     await savePreferences("edtSenha", this._edtSenhaText.text);
     await savePreferences("edtServico", this._edtServicoText.text);
     await savePreferences("edtMotorista", this._edtMotoristaText.text);
+    await savePreferences("edtPlaca", this._edtPlacaText.text);
     Navigator.of(context).pop(true);
   }
 
