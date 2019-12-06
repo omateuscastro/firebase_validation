@@ -224,6 +224,11 @@ class Seguranca {
     return motorista;
   }
 
+  Future getPlaca() async {
+    var placa =  await readPreferences('edtPlaca');
+    return placa;
+  }
+
   Future<Null> savePreferences(String key, String value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString(key, value);
