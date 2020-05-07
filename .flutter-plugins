@@ -1,7 +1,8 @@
-cloud_firestore=/home/vinicius/development/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.12.11/
-device_info=/home/vinicius/development/flutter/.pub-cache/hosted/pub.dartlang.org/device_info-0.4.1+3/
-firebase_auth=/home/vinicius/development/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.15.1/
-firebase_core=/home/vinicius/development/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.0+8/
-package_info=/home/vinicius/development/flutter/.pub-cache/hosted/pub.dartlang.org/package_info-0.4.0+12/
-shared_preferences=/home/vinicius/development/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.4+8/
-firebase_validation=/home/vinicius/Documents/theirs-professional/packages/firebase_validation/
+# This is a generated file; do not edit or check into version control.
+cloud_firestore=/Users/viniciusboscardin/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.12.11/
+device_info=/Users/viniciusboscardin/.pub-cache/hosted/pub.dartlang.org/device_info-0.4.1+3/
+firebase_auth=/Users/viniciusboscardin/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.15.1/
+firebase_core=/Users/viniciusboscardin/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.0+8/
+package_info=/Users/viniciusboscardin/.pub-cache/hosted/pub.dartlang.org/package_info-0.4.0+12/
+shared_preferences=/Users/viniciusboscardin/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.4+8/
+firebase_validation=/Users/viniciusboscardin/projects/cgi/firebase_validation/

@@ -109,7 +109,7 @@ class _ConfigPageState extends State<ConfigPage> {
                           controller: _edtPlacaText,
                           decoration:
                               InputDecoration(labelText: "Placa do veículo"),
-                          keyboardType: TextInputType.number),
+                          keyboardType: TextInputType.text),
                     )
                   : Container(),
               Container(
