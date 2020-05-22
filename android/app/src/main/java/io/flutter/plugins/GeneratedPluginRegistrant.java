@@ -7,7 +7,6 @@ import io.flutter.plugins.firebaseauth.FirebaseAuthPlugin;
 import io.flutter.plugins.firebase.core.FirebaseCorePlugin;
 import io.flutter.plugins.packageinfo.PackageInfoPlugin;
 import io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin;
-import io.github.cgisoftware.firebase_validation.FirebaseValidationPlugin;
 
 /**
  * Generated file. Do not edit.
@@ -23,7 +22,6 @@ public final class GeneratedPluginRegistrant {
     FirebaseCorePlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebase.core.FirebaseCorePlugin"));
     PackageInfoPlugin.registerWith(registry.registrarFor("io.flutter.plugins.packageinfo.PackageInfoPlugin"));
     SharedPreferencesPlugin.registerWith(registry.registrarFor("io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin"));
-    FirebaseValidationPlugin.registerWith(registry.registrarFor("io.github.cgisoftware.firebase_validation.FirebaseValidationPlugin"));
   }
 
   private static boolean alreadyRegisteredWith(PluginRegistry registry) {
