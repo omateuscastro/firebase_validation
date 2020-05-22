@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:package_info/package_info.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
-import 'package:quiver/strings.dart';
 import 'package:intl/intl.dart';
 import 'model/constants.dart';
 import 'dart:async';
@@ -47,7 +46,7 @@ class Seguranca {
 
           String sVersao = await readPreferences("versao");
 
-          if (equalsIgnoreCase(sVersao, packageInfo.version)) {
+          if (sVersao.toLowerCase() == packageInfo.version.toLowerCase()) {
             return '';
           } else {
             await auth();
@@ -81,9 +80,9 @@ class Seguranca {
           .get();
 
       Firebase firebase = Firebase.fromJson(snapshot.data);
-
+      print(firebase.ativo.toLowerCase());
       // verifica se está ativo
-      if (!equalsIgnoreCase(firebase.ativo, "sim")) {
+      if (firebase.ativo.toLowerCase() != "sim") {
         return string002;
       }
 
