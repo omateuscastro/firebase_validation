@@ -14,7 +14,7 @@ class Seguranca {
   final String email;
   final String password;
 
-  Seguranca({@required this.email, @required this.password});
+  Seguranca({this.email, this.password});
 
   String _codigoAcesso;
 

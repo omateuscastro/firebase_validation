@@ -3,7 +3,7 @@
 ### Changed
 - Refatoração do código por [@booscaaa](https://github.com/booscaaa).
 
-## [0.0.9] - 22/05/2020
+## [0.0.10] - 22/05/2020
 
 ### Added
 
