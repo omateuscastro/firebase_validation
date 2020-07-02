@@ -7,6 +7,8 @@ class Firebase {
   String enderecoPacific;
   String nomeCli;
   int versaoMinima;
+  int numDevices;
+  int numDevicesVendedor;
 
   Firebase(
       {this.ativo,
@@ -16,7 +18,9 @@ class Firebase {
       this.dtValidade,
       this.enderecoPacific,
       this.nomeCli,
-      this.versaoMinima});
+      this.versaoMinima,
+      this.numDevices,
+      this.numDevicesVendedor});
 
   factory Firebase.fromJson(Map<String, dynamic> json) => Firebase(
         ativo: json["ativo"] == null ? null : json["ativo"],
@@ -31,5 +35,9 @@ class Firebase {
         nomeCli: json["nome_cli"] == null ? null : json["nome_cli"],
         versaoMinima:
             json["versao_minima"] == null ? null : json["versao_minima"],
+        numDevices: json["num_devices"] == null ? null : json["num_devices"],
+        numDevicesVendedor: json["num_devices_vendedor"] == null
+            ? null
+            : json["num_devices_vendedor"],
       );
 }

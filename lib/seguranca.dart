@@ -181,6 +181,9 @@ class Seguranca {
       await savePreferences("edtServico", firebase.enderecoPacific);
       await savePreferences("dtUltAutenticacao", getData(getDate())[4]);
       await savePreferences("versao", packageInfo.version);
+      await savePreferences("numDevices", firebase.numDevices.toString());
+      await savePreferences(
+          "numDevicesVendedor", firebase.numDevicesVendedor.toString());
       return '';
     } catch (e) {
       return e.toString();
@@ -190,6 +193,16 @@ class Seguranca {
   Future<Map<String, dynamic>> getBuildVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return {'b': packageInfo.buildNumber.toString(), 'v': packageInfo.version};
+  }
+
+  Future<int> getNumDevices() async {
+    int numDevices = int.parse(await readPreferences('numDevices'));
+    return numDevices;
+  }
+
+  Future<int> getNumDevicesVendedor() async {
+    int numDevices = int.parse(await readPreferences('numDevicesVendedor'));
+    return numDevices;
   }
 
   Future getCodigo() async {
