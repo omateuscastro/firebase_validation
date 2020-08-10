@@ -3,6 +3,14 @@
 ### Changed
 - Refatoração do código por [@booscaaa](https://github.com/booscaaa).
 
+## [0.0.11] - 02/07/2020
+
+### Added
+
+ - Informações do numero de devices
+ - Informações do numero de usuários
+
+
 ## [0.0.10] - 22/05/2020
 
 ### Added
