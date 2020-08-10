@@ -1,6 +1,6 @@
 name: firebase_validation
 description: Plugin usado pela empresa CGI Software para validação de dados
-version: 0.0.10
+version: 0.0.11
 homepage: http://www.webcgi.com.br
 
 environment:
