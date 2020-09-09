@@ -75,10 +75,16 @@ class _ConfigPageState extends State<ConfigPage> {
                     onPressed: () {
                       _grava();
                     })
-                : Center(
-                    child: CircularProgressIndicator(
-                    backgroundColor: Colors.white,
-                  )),
+                : Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Center(
+                        child: SizedBox(
+                            height: 25.0,
+                            width: 25.0,
+                            child: CircularProgressIndicator(
+                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                              backgroundColor: Colors.white,
+                            )))),
           ],
         ),
         body: SingleChildScrollView(
@@ -195,25 +201,24 @@ class _ConfigPageState extends State<ConfigPage> {
                                       "Versão atual do build: ${_version['b']}")
                                   : Container(),
                             ],
-                          ))
+                          )),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 20),
+                        height: 50,
+                        width: double.infinity,
+                        child: RaisedButton(
+                            child: Text(
+                              "Política de Privacidade",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => PoliticaPage()));
+                            }),
+                      )
                     ],
                   ),
-                ))),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          height: 50,
-          width: double.infinity,
-          child: RaisedButton(
-              child: Text(
-                "Política de Privacidade",
-                style: TextStyle(fontSize: 20),
-              ),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PoliticaPage()));
-              }),
-        ));
+                ))));
   }
 
   Future<Null> savePreferences(String key, String value) async {
