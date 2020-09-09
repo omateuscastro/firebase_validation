@@ -1,9 +1,9 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_validation/app/page/politica.dart';
 import 'package:firebase_validation/seguranca.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-// import 'funcoes.dart';
-// import 'package:liberacaoremota/politica.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ConfigPage extends StatefulWidget {
   final bool motorista;
@@ -52,15 +52,15 @@ class _ConfigPageState extends State<ConfigPage> {
   }
 
   setValues() async {
-    this._edtUsuarioText.text = await redPreferences("edtUsuario");
-    this._edtCodigoText.text = await redPreferences("edtCodigo");
-    this._edtSenhaText.text = await redPreferences("edtSenha");
-    this._edtServicoText.text = await redPreferences("edtServico");
+    this._edtUsuarioText.text = await _redPreferences("edtUsuario");
+    this._edtCodigoText.text = await _redPreferences("edtCodigo");
+    this._edtSenhaText.text = await _redPreferences("edtSenha");
+    this._edtServicoText.text = await _redPreferences("edtServico");
     if (this.widget.motorista) {
-      this._edtMotoristaText.text = await redPreferences("edtMotorista");
+      this._edtMotoristaText.text = await _redPreferences("edtMotorista");
     }
     if (this.widget.placa) {
-      this._edtPlacaText.text = await redPreferences("edtPlaca");
+      this._edtPlacaText.text = await _redPreferences("edtPlaca");
     }
 
     _version = await s.getBuildVersion();
@@ -96,146 +96,226 @@ class _ConfigPageState extends State<ConfigPage> {
                             )))),
           ],
         ),
-        body: SingleChildScrollView(
-            child: Container(
-                padding:
-                    EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 80),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: TextFormField(
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return 'Informe o código de acesso';
-                                }
-                                return null;
-                              },
-                              focusNode: _edtCodigoFocus,
-                              controller: _edtCodigoText,
-                              decoration: InputDecoration(
-                                  labelText: "Código de Acesso",
-                                  filled: this.widget.filled),
-                              keyboardType: TextInputType.text)),
-                      this.widget.motorista
-                          ? Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: TextFormField(
-                                  validator: (val) {
-                                    if (val.isEmpty) {
-                                      return 'Informe a código do motorista';
-                                    }
-                                    return null;
-                                  },
-                                  focusNode: _edtMotoristaFocus,
-                                  controller: _edtMotoristaText,
-                                  decoration: InputDecoration(
-                                      labelText: "Código do Motorista",
-                                      filled: this.widget.filled),
-                                  keyboardType: TextInputType.number))
-                          : Container(),
-                      Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: TextFormField(
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return 'Informe o usuário';
-                                }
-                                return null;
-                              },
-                              focusNode: _edtUsuarioFocus,
-                              controller: _edtUsuarioText,
-                              decoration: InputDecoration(
-                                  labelText: "Usuário",
-                                  filled: this.widget.filled),
-                              keyboardType: TextInputType.text)),
-                      Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: TextFormField(
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return 'Informe a senha';
-                                }
-                                return null;
-                              },
-                              focusNode: _edtSenhaFocus,
-                              controller: _edtSenhaText,
-                              decoration: InputDecoration(
-                                  labelText: "Senha",
-                                  filled: this.widget.filled),
-                              keyboardType: TextInputType.text,
-                              obscureText: true)),
-                      this.widget.placa
-                          ? Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: TextFormField(
-                                  validator: (val) {
-                                    if (val.isEmpty) {
-                                      return 'Informe a placa do veiculo';
-                                    }
-                                    return null;
-                                  },
-                                  focusNode: _edtPlacaFocus,
-                                  controller: _edtPlacaText,
-                                  decoration: InputDecoration(
-                                      labelText: "Placa do veículo",
-                                      filled: this.widget.filled),
-                                  keyboardType: TextInputType.text))
-                          : Container(),
-                      Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: TextFormField(
-                              enabled: false,
-                              focusNode: _edtServicoFocus,
-                              controller: _edtServicoText,
-                              decoration: InputDecoration(
-                                  labelText: "Serviço",
-                                  filled: this.widget.filled),
-                              keyboardType: TextInputType.url)),
-                      Container(
-                          padding: EdgeInsets.only(top: 10),
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              _version != null
-                                  ? Text(
-                                      "Versão atual do aplicativo: ${_version['v']}")
-                                  : Container(),
-                              _version != null
-                                  ? Text(
-                                      "Versão atual do build: ${_version['b']}")
-                                  : Container(),
-                            ],
-                          )),
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        height: 50,
-                        width: double.infinity,
-                        child: RaisedButton(
-                            child: Text(
-                              "Política de Privacidade",
-                              style: TextStyle(fontSize: 20),
+        body: Container(
+            padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 20),
+            child: Form(
+              key: _formKey,
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 100,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                child: TextFormField(
+                                    validator: (val) {
+                                      if (val.isEmpty) {
+                                        return 'Informe o código de acesso';
+                                      }
+                                      return null;
+                                    },
+                                    focusNode: _edtCodigoFocus,
+                                    controller: _edtCodigoText,
+                                    decoration: InputDecoration(
+                                        labelText: "Código de Acesso",
+                                        filled: this.widget.filled),
+                                    keyboardType: TextInputType.text)),
+                            this.widget.motorista
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: TextFormField(
+                                        validator: (val) {
+                                          if (val.isEmpty) {
+                                            return 'Informe a código do motorista';
+                                          }
+                                          return null;
+                                        },
+                                        focusNode: _edtMotoristaFocus,
+                                        controller: _edtMotoristaText,
+                                        decoration: InputDecoration(
+                                            labelText: "Código do Motorista",
+                                            filled: this.widget.filled),
+                                        keyboardType: TextInputType.number))
+                                : Container(),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                child: TextFormField(
+                                    validator: (val) {
+                                      if (val.isEmpty) {
+                                        return 'Informe o usuário';
+                                      }
+                                      return null;
+                                    },
+                                    focusNode: _edtUsuarioFocus,
+                                    controller: _edtUsuarioText,
+                                    decoration: InputDecoration(
+                                        labelText: "Usuário",
+                                        filled: this.widget.filled),
+                                    keyboardType: TextInputType.text)),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                child: TextFormField(
+                                    validator: (val) {
+                                      if (val.isEmpty) {
+                                        return 'Informe a senha';
+                                      }
+                                      return null;
+                                    },
+                                    focusNode: _edtSenhaFocus,
+                                    controller: _edtSenhaText,
+                                    decoration: InputDecoration(
+                                        labelText: "Senha",
+                                        filled: this.widget.filled),
+                                    keyboardType: TextInputType.text,
+                                    obscureText: true)),
+                            this.widget.placa
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: TextFormField(
+                                        validator: (val) {
+                                          if (val.isEmpty) {
+                                            return 'Informe a placa do veiculo';
+                                          }
+                                          return null;
+                                        },
+                                        focusNode: _edtPlacaFocus,
+                                        controller: _edtPlacaText,
+                                        decoration: InputDecoration(
+                                            labelText: "Placa do veículo",
+                                            filled: this.widget.filled),
+                                        keyboardType: TextInputType.text))
+                                : Container(),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                child: TextFormField(
+                                    enabled: false,
+                                    focusNode: _edtServicoFocus,
+                                    controller: _edtServicoText,
+                                    decoration: InputDecoration(
+                                        labelText: "Serviço",
+                                        filled: this.widget.filled),
+                                    keyboardType: TextInputType.url)),
+                            Container(
+                                padding: EdgeInsets.only(top: 10),
+                                width: double.infinity,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    _version != null
+                                        ? Text(
+                                            "Versão atual do aplicativo: ${_version['v']}")
+                                        : Container(),
+                                    _version != null
+                                        ? Text(
+                                            "Versão atual do build: ${_version['b']}")
+                                        : Container(),
+                                  ],
+                                )),
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 20),
+                              height: 50,
+                              width: double.infinity,
+                              child: RaisedButton(
+                                  child: Text(
+                                    "Política de Privacidade",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PoliticaPage()));
+                                  }),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => PoliticaPage()));
-                            }),
-                      )
-                    ],
-                  ),
-                ))));
+                          ],
+                        ),
+                      )),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            _launchSocial('fb://page/338379049642068',
+                                'https://www.facebook.com/CGISoftware');
+                          },
+                          child: Icon(
+                            FontAwesomeIcons.facebook,
+                            color: Colors.blue,
+                            size: 40,
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              _launchSocial('instagram://cgisoftware',
+                                  'https://www.instagram.com/cgisoftware');
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.instagram,
+                              color: Colors.purpleAccent,
+                              size: 40,
+                            )),
+                        InkWell(
+                            onTap: () {
+                              _launchSocial(
+                                  'linkedin://company/cgisoftware/about/',
+                                  'https://www.linkedin.com/company/cgisoftware/about/');
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.linkedin,
+                              color: Colors.blue[900],
+                              size: 40,
+                            )),
+                        InkWell(
+                            onTap: () {
+                              _launchSocial('twitter://CgiSoftware',
+                                  'https://twitter.com/CgiSoftware');
+                            },
+                            child: Center(
+                              child: Icon(
+                                FontAwesomeIcons.twitter,
+                                color: Colors.blue[300],
+                                size: 40,
+                              ),
+                            ))
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )));
   }
 
-  Future<Null> savePreferences(String key, String value) async {
+  void _launchSocial(String url, String fallbackUrl) async {
+    // Don't use canLaunch because of fbProtocolUrl (fb://)
+    try {
+      bool launched =
+          await launch(url, forceSafariVC: false, forceWebView: false);
+      if (!launched) {
+        await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
+      }
+    } catch (e) {
+      print(e);
+      await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
+    }
+  }
+
+  Future<Null> _savePreferences(String key, String value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString(key, value);
   }
 
-  Future<String> redPreferences(String key) async {
+  Future<String> _redPreferences(String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String sRetorno = sharedPreferences.getString(key);
@@ -250,12 +330,12 @@ class _ConfigPageState extends State<ConfigPage> {
     if (_formKey.currentState.validate()) {
       this._isLoading = true;
       setState(() {});
-      await savePreferences("edtCodigo", this._edtCodigoText.text);
-      await savePreferences("edtUsuario", this._edtUsuarioText.text);
-      await savePreferences("edtSenha", this._edtSenhaText.text);
-      await savePreferences("edtServico", this._edtServicoText.text);
-      await savePreferences("edtMotorista", this._edtMotoristaText.text);
-      await savePreferences("edtPlaca", this._edtPlacaText.text);
+      await _savePreferences("edtCodigo", this._edtCodigoText.text);
+      await _savePreferences("edtUsuario", this._edtUsuarioText.text);
+      await _savePreferences("edtSenha", this._edtSenhaText.text);
+      await _savePreferences("edtServico", this._edtServicoText.text);
+      await _savePreferences("edtMotorista", this._edtMotoristaText.text);
+      await _savePreferences("edtPlaca", this._edtPlacaText.text);
       ;
       var r = await s.execute();
       print(r);
@@ -266,7 +346,7 @@ class _ConfigPageState extends State<ConfigPage> {
       } else {
         this._isLoading = false;
         setState(() {});
-        this._edtServicoText.text = await redPreferences("edtServico");
+        this._edtServicoText.text = await _redPreferences("edtServico");
         final snackBar = SnackBar(
           content: Text('Configurações salvar com sucesso!'),
           // action: SnackBarAction(

@@ -1,10 +1,13 @@
 # Changelog
 
-### Changed
-- Refatoração do código por [@booscaaa](https://github.com/booscaaa).
+## [0.0.15] - 09/09/2020
+
+### Added
+
+ - Adicionado redes sociais da CGI nas configurações
 
 
-## [0.0.14] - 14/08/2020
+## [0.0.14] - 09/09/2020
 
 ### Chanded
 
@@ -12,17 +15,23 @@
  - Alterado snackbar para não mostrar botão OK
  - Adicionado politica de privacidade novamente ao aplicativo
 
+
 ## [0.0.13] - 14/08/2020
 
 ### Added
 
  - Removido politica de privacidade do aplicativo
 
+
 ## [0.0.12] - 10/08/2020
+
+### Changed
+- Refatoração do código por [@booscaaa](https://github.com/booscaaa).
 
 ### Added
 
  - Atualizado bibliotecas do firebase
+
 
 ## [0.0.11] - 02/07/2020
 

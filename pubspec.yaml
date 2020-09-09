@@ -1,6 +1,6 @@
 name: firebase_validation
 description: Plugin usado pela empresa CGI Software para validação de dados
-version: 0.0.14
+version: 0.0.15
 homepage: http://www.webcgi.com.br
 
 environment:
@@ -9,14 +9,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  font_awesome_flutter: ^8.8.1
   shared_preferences: ^0.5.8
-  package_info: ^0.4.1
   cloud_firestore: ^0.13.7
-  device_info: ^0.4.2+4
   firebase_auth: ^0.16.1
-  intl: ^0.16.1
+  device_info: ^0.4.2+4
+  url_launcher: ^5.5.3
   flutter_html: ^1.0.2
-
+  package_info: ^0.4.1
+  intl: ^0.16.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -40,8 +42,7 @@ flutter:
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  #  - images/
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages
