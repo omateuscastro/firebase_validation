@@ -9,7 +9,14 @@ class ConfigPage extends StatefulWidget {
   final bool motorista;
   final bool placa;
   final bool filled;
-  ConfigPage({this.motorista = false, this.placa = false, this.filled = false});
+  final Color appBarColor;
+  final Color appBarTextColor;
+  ConfigPage(
+      {this.motorista = false,
+      this.placa = false,
+      this.filled = false,
+      this.appBarColor = Colors.transparent,
+      this.appBarTextColor = Colors.white});
   @override
   _ConfigPageState createState() => _ConfigPageState();
 }
@@ -66,8 +73,9 @@ class _ConfigPageState extends State<ConfigPage> {
         key: _scaffoldKey,
         appBar: AppBar(
           automaticallyImplyLeading: !_isLoading,
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: widget.appBarColor,
           title: Text("Configurações"),
+          iconTheme: IconThemeData(color: widget.appBarTextColor),
           actions: <Widget>[
             !_isLoading
                 ? IconButton(
@@ -82,7 +90,8 @@ class _ConfigPageState extends State<ConfigPage> {
                             height: 25.0,
                             width: 25.0,
                             child: CircularProgressIndicator(
-                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                              valueColor: new AlwaysStoppedAnimation<Color>(
+                                  Colors.blue),
                               backgroundColor: Colors.white,
                             )))),
           ],
@@ -260,12 +269,12 @@ class _ConfigPageState extends State<ConfigPage> {
         this._edtServicoText.text = await redPreferences("edtServico");
         final snackBar = SnackBar(
           content: Text('Configurações salvar com sucesso!'),
-          action: SnackBarAction(
-            label: 'OK',
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          // action: SnackBarAction(
+          //   label: 'OK',
+          //   onPressed: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
         );
 
         _scaffoldKey.currentState.showSnackBar(snackBar);

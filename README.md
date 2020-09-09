@@ -24,7 +24,13 @@ await Navigator.push(context,
 Vocẽ pode passar alguns paramêtros se precisar:
 
 ```dart
-ConfigPage(motorista: true, placa: true, filled: true)
+ConfigPage(
+    motorista: true, 
+    placa: true, 
+    filled: true, 
+    appBarColor: Theme.of(context).primaryColor, 
+    appBarTextColor: Colors.white
+);
 ```
 
 
