@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.16] - 09/09/2020
+
+### Chanded
+
+ - Alterado cores dos icones
+
+
 ## [0.0.15] - 09/09/2020
 
 ### Added

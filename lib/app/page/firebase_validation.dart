@@ -74,7 +74,10 @@ class _ConfigPageState extends State<ConfigPage> {
         appBar: AppBar(
           automaticallyImplyLeading: !_isLoading,
           backgroundColor: widget.appBarColor,
-          title: Text("Configurações"),
+          title: Text(
+            "Configurações",
+            style: TextStyle(color: widget.appBarTextColor),
+          ),
           iconTheme: IconThemeData(color: widget.appBarTextColor),
           actions: <Widget>[
             !_isLoading
@@ -262,7 +265,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             },
                             child: Icon(
                               FontAwesomeIcons.instagram,
-                              color: Colors.purpleAccent,
+                              color: Colors.blue,
                               size: 40,
                             )),
                         InkWell(
@@ -273,7 +276,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             },
                             child: Icon(
                               FontAwesomeIcons.linkedin,
-                              color: Colors.blue[900],
+                              color: Colors.blue,
                               size: 40,
                             )),
                         InkWell(
@@ -284,7 +287,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             child: Center(
                               child: Icon(
                                 FontAwesomeIcons.twitter,
-                                color: Colors.blue[300],
+                                color: Colors.blue,
                                 size: 40,
                               ),
                             ))
