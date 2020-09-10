@@ -4,7 +4,7 @@ Um pacote para validações do firebase da CGI;
 
 ## Instalação
 
-- Adicione o `firebase_validation: 0.0.16` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `firebase_validation: 0.0.17` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 

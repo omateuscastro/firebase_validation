@@ -1,5 +1,13 @@
 # Changelog
 
+
+## [0.0.17] - 09/09/2020
+
+### Chanded
+
+ - Ajustado problemas com instagram
+
+
 ## [0.0.16] - 09/09/2020
 
 ### Chanded

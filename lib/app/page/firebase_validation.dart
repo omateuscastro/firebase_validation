@@ -249,7 +249,7 @@ class _ConfigPageState extends State<ConfigPage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            _launchSocial('fb://page/338379049642068',
+                            _launchSocial('fb://profile/338379049642068',
                                 'https://www.facebook.com/CGISoftware');
                           },
                           child: Icon(
@@ -260,8 +260,8 @@ class _ConfigPageState extends State<ConfigPage> {
                         ),
                         InkWell(
                             onTap: () {
-                              _launchSocial('instagram://cgisoftware',
-                                  'https://www.instagram.com/cgisoftware');
+                              _launchSocial('https://www.instagram.com/cgisoftware/',
+                                  'https://www.instagram.com/cgisoftware/');
                             },
                             child: Icon(
                               FontAwesomeIcons.instagram,
@@ -281,7 +281,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             )),
                         InkWell(
                             onTap: () {
-                              _launchSocial('twitter://CgiSoftware',
+                              _launchSocial('twitter://user?screen_name=CgiSoftware',
                                   'https://twitter.com/CgiSoftware');
                             },
                             child: Center(
