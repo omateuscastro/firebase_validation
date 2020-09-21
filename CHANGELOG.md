@@ -1,7 +1,22 @@
 # Changelog
 
 
-## [0.0.17] - 09/09/2020
+## [1.0.4] - 15/09/2020
+
+### Added
+
+ - Adicionado metodo para atualizar o token quando o mesmo estiver invalido.
+
+
+
+## [1.0.3] - 14/09/2020
+
+### Added
+
+ - Criado configuração para utilização do gateway da CGI, onde será possivel visualizar todos os logs de erros dos aplicativos e também minificar os dados enviados nas requisições
+
+
+## [0.0.18] - 09/09/2020
 
 ### Chanded
 

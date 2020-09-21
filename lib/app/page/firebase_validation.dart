@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_validation/app/page/politica.dart';
@@ -11,12 +12,16 @@ class ConfigPage extends StatefulWidget {
   final bool filled;
   final Color appBarColor;
   final Color appBarTextColor;
+  final bool gateway;
+  final String aplicativo;
   ConfigPage(
       {this.motorista = false,
       this.placa = false,
       this.filled = false,
       this.appBarColor = Colors.transparent,
-      this.appBarTextColor = Colors.white});
+      this.appBarTextColor = Colors.white,
+      this.gateway = false,
+      this.aplicativo = ""});
   @override
   _ConfigPageState createState() => _ConfigPageState();
 }
@@ -254,18 +259,19 @@ class _ConfigPageState extends State<ConfigPage> {
                           },
                           child: Icon(
                             FontAwesomeIcons.facebook,
-                            color: Colors.blue,
+                            color: Color(0xff3A5997),
                             size: 40,
                           ),
                         ),
                         InkWell(
                             onTap: () {
-                              _launchSocial('https://www.instagram.com/cgisoftware/',
+                              _launchSocial(
+                                  'https://www.instagram.com/cgisoftware/',
                                   'https://www.instagram.com/cgisoftware/');
                             },
                             child: Icon(
                               FontAwesomeIcons.instagram,
-                              color: Colors.blue,
+                              color: Color(0xff3E729A),
                               size: 40,
                             )),
                         InkWell(
@@ -276,18 +282,19 @@ class _ConfigPageState extends State<ConfigPage> {
                             },
                             child: Icon(
                               FontAwesomeIcons.linkedin,
-                              color: Colors.blue,
+                              color: Color(0xff027BB6),
                               size: 40,
                             )),
                         InkWell(
                             onTap: () {
-                              _launchSocial('twitter://user?screen_name=CgiSoftware',
+                              _launchSocial(
+                                  'twitter://user?screen_name=CgiSoftware',
                                   'https://twitter.com/CgiSoftware');
                             },
                             child: Center(
                               child: Icon(
                                 FontAwesomeIcons.twitter,
-                                color: Colors.blue,
+                                color: Color(0xff2995E8),
                                 size: 40,
                               ),
                             ))
@@ -339,7 +346,6 @@ class _ConfigPageState extends State<ConfigPage> {
       await _savePreferences("edtServico", this._edtServicoText.text);
       await _savePreferences("edtMotorista", this._edtMotoristaText.text);
       await _savePreferences("edtPlaca", this._edtPlacaText.text);
-      ;
       var r = await s.execute();
       print(r);
       if (r != "") {
@@ -347,22 +353,63 @@ class _ConfigPageState extends State<ConfigPage> {
         this._isLoading = false;
         setState(() {});
       } else {
-        this._isLoading = false;
-        setState(() {});
         this._edtServicoText.text = await _redPreferences("edtServico");
-        final snackBar = SnackBar(
-          content: Text('Configurações salvar com sucesso!'),
-          // action: SnackBarAction(
-          //   label: 'OK',
-          //   onPressed: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
-        );
+        if (widget.gateway) {
+          try {
+            Dio dio = new Dio();
 
-        _scaffoldKey.currentState.showSnackBar(snackBar);
-        await Future.delayed(new Duration(milliseconds: 2000));
-        Navigator.pop(context);
+            Response response = await dio
+                .post("https://gateway.cgisoftware.com.br/sessao", data: {
+              "usuario": this._edtUsuarioText.text,
+              "senha": this._edtSenhaText.text,
+              "pacific": this._edtServicoText.text,
+              "versao": int.parse(await _redPreferences("versao_minima")),
+              "cliente": this._edtCodigoText.text,
+              "aplicativo": widget.aplicativo
+            });
+
+            if (response.data["token"] != null) {
+              print(response.data["token"]);
+              await _savePreferences("token", response.data["token"]);
+
+              this._isLoading = false;
+              setState(() {});
+
+              final snackBar = SnackBar(
+                content: Text('Configurações salvar com sucesso!'),
+                // action: SnackBarAction(
+                //   label: 'OK',
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //   },
+                // ),
+              );
+
+              _scaffoldKey.currentState.showSnackBar(snackBar);
+              await Future.delayed(new Duration(milliseconds: 2000));
+              Navigator.pop(context);
+            }
+          } catch (e) {
+            s.show(e.toString(), context);
+          }
+        } else {
+          this._isLoading = false;
+          setState(() {});
+
+          final snackBar = SnackBar(
+            content: Text('Configurações salvar com sucesso!'),
+            // action: SnackBarAction(
+            //   label: 'OK',
+            //   onPressed: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
+          );
+
+          _scaffoldKey.currentState.showSnackBar(snackBar);
+          await Future.delayed(new Duration(milliseconds: 2000));
+          Navigator.pop(context);
+        }
       }
     }
     // Navigator.of(context).pop(true);

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_validation/model/firebase.dart';
@@ -17,6 +18,29 @@ class Seguranca {
   Seguranca({this.email, this.password});
 
   String _codigoAcesso;
+
+  refresh(String aplicativo) async {
+    try {
+      Dio dio = new Dio();
+
+      Response response =
+          await dio.post("https://gateway.cgisoftware.com.br/sessao", data: {
+        "usuario": await this.getUsuario(),
+        "senha": await this.getSenha(),
+        "pacific": await this.getURL(),
+        "versao": int.parse(await this.getVersaoMinima()),
+        "cliente": await this.getCodigo(),
+        "aplicativo": aplicativo
+      });
+
+      if (response.data["token"] != null) {
+        print(response.data["token"]);
+        await this.savePreferences("token", response.data["token"]);
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
 
   Future<String> execute() async {
     this._codigoAcesso = await readPreferences("edtCodigo");
@@ -184,6 +208,8 @@ class Seguranca {
       await savePreferences("numDevices", firebase.numDevices.toString());
       await savePreferences(
           "numDevicesVendedor", firebase.numDevicesVendedor.toString());
+
+      await savePreferences("versao_minima", firebase.versaoMinima.toString());
       return '';
     } catch (e) {
       return e.toString();
@@ -233,6 +259,16 @@ class Seguranca {
   Future getPlaca() async {
     var placa = await readPreferences('edtPlaca');
     return placa;
+  }
+
+  Future getToken() async {
+    var token = await readPreferences('token');
+    return token;
+  }
+
+  Future getVersaoMinima() async {
+    var token = await readPreferences('versao_minima');
+    return token;
   }
 
   Future<Null> savePreferences(String key, String value) async {

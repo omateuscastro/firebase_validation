@@ -4,7 +4,7 @@ Um pacote para validações do firebase da CGI;
 
 ## Instalação
 
-- Adicione o `firebase_validation: 0.0.17` no `pubspec.yaml` do seu aplicativo.
+- Adicione o `firebase_validation: 1.0.4` no `pubspec.yaml` do seu aplicativo.
 - Adicione os arquivos do google firebase no Android e iOS.
 - Rode `flutter pub get`
 
@@ -21,7 +21,7 @@ await Navigator.push(context,
         transitionDuration: Duration(milliseconds: 100)));
 ```
 
-Vocẽ pode passar alguns paramêtros se precisar:
+Você pode passar alguns paramêtros se precisar:
 
 ```dart
 ConfigPage(
@@ -30,6 +30,15 @@ ConfigPage(
     filled: true, 
     appBarColor: Theme.of(context).primaryColor, 
     appBarTextColor: Colors.white
+);
+```
+
+Para fazer o uso do gateway basta ativá-lo na chamada da pagina
+
+```dart
+ConfigPage(
+    gateway: true,
+    aplicativo: "inventario"
 );
 ```
 
