@@ -1,6 +1,14 @@
 # Changelog
 
 
+
+## [1.0.5] - 15/09/2020
+
+### Chanded
+
+ - Ajustado parametros no pubspec para a nova versão do flutter
+
+
 ## [1.0.4] - 15/09/2020
 
 ### Added
